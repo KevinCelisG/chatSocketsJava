@@ -37,14 +37,13 @@ public class Server {
 
         while (check) {
             if (!connection.isClosed()) {
-                new DataOutputStream(connection.getOutputStream()).writeUTF("Write a word, if you want to exit to the program, just write salir");
+                // new DataOutputStream(connection.getOutputStream()).writeUTF("Write a word, if you want to exit to the program, just write salir");
                 message = new DataInputStream(connection.getInputStream()).readUTF();
                 if (message.equalsIgnoreCase("Salir")) {
-                    check = false;
+                    connection.close();
                 } else {
                     System.out.println(message);
                 }
-                connection.close();
             } else {
                 connection = makeConnection();
             }

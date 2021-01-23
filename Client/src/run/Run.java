@@ -10,7 +10,11 @@ import java.util.Scanner;
 public class Run {
 
     public static void main(String[] args) {
-        new Presenter();
+        try {
+            new Presenter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         /*Scanner scanner = new Scanner(System.in);
         try {
             Client client = new Client();
