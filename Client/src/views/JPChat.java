@@ -56,6 +56,14 @@ public class JPChat extends JPanel {
         jTFMessage.setText("");
     }
 
+    public String getIp() {
+        return jTFIp.getText();
+    }
+
+    public String getNickname() {
+        return jTFNick.getText();
+    }
+
     private JTextField getJTFCustom(String text) {
         JTextField jTextField = new JTextField();
         jTextField.setBorder(getTitledBorder(text));

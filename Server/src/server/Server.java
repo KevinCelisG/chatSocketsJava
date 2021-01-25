@@ -1,8 +1,9 @@
 package server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import models.ClientSend;
+
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -23,26 +24,31 @@ public class Server {
         Thread thread = new Thread(() -> {
             try {
                 processData();
-            } catch (IOException exception) {
+            } catch (IOException | ClassNotFoundException exception) {
                 exception.printStackTrace();
             }
         });
         thread.start();
     }
 
-    private void processData() throws IOException {
+    private void processData() throws IOException, ClassNotFoundException {
         Socket connection = makeConnection();
         boolean check = true;
+        ClientSend clientSend;
         String message;
 
         while (check) {
             if (!connection.isClosed()) {
-                // new DataOutputStream(connection.getOutputStream()).writeUTF("Write a word, if you want to exit to the program, just write salir");
-                message = new DataInputStream(connection.getInputStream()).readUTF();
+                /*new DataOutputStream(connection.getOutputStream()).writeUTF("Write a word, if you want to exit to the program, just write salir");
+                message = new DataInputStream(connection.getInputStream()).readUTF();*/
+                clientSend = (ClientSend) (new ObjectInputStream(connection.getInputStream()).readObject());
+                message = clientSend.getMessage();
                 if (message.equalsIgnoreCase("Salir")) {
                     connection.close();
                 } else {
+                    System.out.println(clientSend.getIp());
                     System.out.println(message);
+                    System.out.println(clientSend.getNickname());
                 }
             } else {
                 connection = makeConnection();

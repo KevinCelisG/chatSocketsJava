@@ -1,5 +1,6 @@
 package presenters;
 
+import models.ClientSend;
 import network.Client;
 import views.JFMain;
 
@@ -27,7 +28,8 @@ public class Presenter implements ActionListener {
 
     private void sendMessage() {
         try {
-            client.writeMessage(jfMain.getMessage());
+            /*client.sendMessage(jfMain.getMessage());*/
+            client.sendObject(new ClientSend(jfMain.getNickname(), jfMain.getIp(), jfMain.getMessage()));
             jfMain.clearMessage();
         } catch (IOException exception) {
             exception.printStackTrace();

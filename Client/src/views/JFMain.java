@@ -27,4 +27,12 @@ public class JFMain extends JFrame {
     public void clearMessage() {
         jpChat.clearMessage();
     }
+
+    public String getIp() {
+        return jpChat.getIp();
+    }
+
+    public String getNickname() {
+        return jpChat.getNickname();
+    }
 }
